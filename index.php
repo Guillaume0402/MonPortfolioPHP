@@ -1,3 +1,13 @@
+<?php
+require_once 'db/db_connect.php';
+require_once 'db/projects.php';
+require_once 'db/skills.php';
+require_once 'includes/helpers.php';
+$pdo = connectDB();
+$projects = getProjects($pdo);
+$skills = getSkills($pdo);
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -28,7 +38,7 @@
 
                         <div class="hero-actions">
                             <a class="btn btn-primary" href="#projects">Voir mes projets</a>
-                            <a class="btn btn-ghost" href="#contact">Me contacter</a>
+                            <a class="btn btn-ghost" href="/pages/contact.php">Me contacter</a>
                         </div>
 
                         <div class="hero-badges" aria-label="Points forts">
@@ -50,7 +60,7 @@
                             <p class="tl"><span class="t-dim">02</span> <span class="t-kw">public</span> <span class="t-var">$name</span> = <span class="t-str">'Guillaume'</span>;</p>
                             <p class="tl"><span class="t-dim">03</span> <span class="t-kw">public</span> <span class="t-var">$skills</span> = [</p>
                             <p class="tl"><span class="t-dim">04</span> <span class="t-str">'HTML'</span>, <span class="t-str">'CSS'</span>, <span class="t-str">'JS'</span>,</p>
-                            <p class="tl"><span class="t-dim">05</span> <span class="t-str">'PHP'</span>, <span class="t-str">'Git'</span>, <span class="t-str">'A11y'</span></p>
+                            <p class="tl"><span class="t-dim">05</span> <span class="t-str">'PHP'</span>, <span class="t-str">'Git'</span>, <span class="t-str">'Docker'</span></p>
                             <p class="tl"><span class="t-dim">06</span> ];</p>
                             <p class="tl t-blank"></p>
                             <p class="tl"><span class="t-dim">07</span> <span class="t-kw">public function</span> <span class="t-fn">build</span>(<span class="t-var">$idea</span>) {</p>
@@ -77,62 +87,47 @@
                     <h2 class="section-title">Projets</h2>
                     <p class="section-lead">Une sélection de réalisations. Remplace les liens et descriptions par les tiennes.</p>
                 </header>
-
-                <div class="cards-grid">
-                    <article class="card reveal">
-                        <div class="card-body">
-                            <span class="card-num">01</span>
-                            <div class="card-top">
-                                <h3 class="card-title">Site vitrine</h3>
-                                <p class="card-text">Landing page performante, sections claires, et design responsive.</p>
-                            </div>
-                        </div>
-                        <div class="tag-row" aria-label="Technologies">
-                            <span class="tag">HTML</span>
-                            <span class="tag">CSS</span>
-                            <span class="tag">PHP</span>
-                        </div>
-                        <div class="card-actions">
-                            <a class="card-link" href="#" aria-label="Voir le projet 1">Voir le projet</a>
-                        </div>
-                    </article>
-
-                    <article class="card reveal">
-                        <div class="card-body">
-                            <span class="card-num">02</span>
-                            <div class="card-top">
-                                <h3 class="card-title">Application web</h3>
-                                <p class="card-text">Interface propre, composants réutilisables et flux utilisateur simple.</p>
-                            </div>
-                        </div>
-                        <div class="tag-row" aria-label="Technologies">
-                            <span class="tag">UI</span>
-                            <span class="tag">API</span>
-                            <span class="tag">Sécurité</span>
-                        </div>
-                        <div class="card-actions">
-                            <a class="card-link" href="#" aria-label="Voir le projet 2">Voir le projet</a>
-                        </div>
-                    </article>
-
-                    <article class="card reveal">
-                        <div class="card-body">
-                            <span class="card-num">03</span>
-                            <div class="card-top">
-                                <h3 class="card-title">Optimisation perf</h3>
-                                <p class="card-text">Amélioration des performances, accessibilité et SEO technique.</p>
-                            </div>
-                        </div>
-                        <div class="tag-row" aria-label="Technologies">
-                            <span class="tag">Lighthouse</span>
-                            <span class="tag">A11y</span>
-                            <span class="tag">SEO</span>
-                        </div>
-                        <div class="card-actions">
-                            <a class="card-link" href="#" aria-label="Voir le projet 3">Voir le projet</a>
-                        </div>
-                    </article>
-                </div>
+                <?php if (empty($projects)): ?>
+                    <p class="empty-state">Aucun projet pour le moment.</p>
+                <?php else: ?>
+                    <div class="cards-grid">
+                        <?php foreach ($projects as $project): ?>
+                            <article class="card reveal">
+                                <div class="card-body">
+                                    <div class="card-top">
+                                        <h3 class="card-title"><?= e($project['title']) ?></h3>
+                                        <?php
+                                        $img = !empty($project['image']) ? $project['image'] : 'default.png';
+                                        ?>
+                                        <div class="card-media">
+                                            <img class="card-img" loading="lazy" src="images/<?= e($img) ?>" alt="<?= e($project['title']) ?>">
+                                        </div>
+                                        <?php if (!empty($project['description'])): ?>
+                                            <p class="card-text"><?= e($project['description']) ?></p>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                                <div class="tag-row" aria-label="Technologies">
+                                    <span class="tag">HTML</span>
+                                    <span class="tag">CSS</span>
+                                    <span class="tag">PHP</span>
+                                </div>
+                                <div class="btn-projects">
+                                    <?php if (!empty($project['github_link'])): ?>
+                                        <div class="card-actions">
+                                            <a class="card-link" href="<?= e($project['github_link']) ?>" aria-label="Voir le github du projet <?= e($project['title']) ?>" target="_blank" rel="noopener noreferrer">Github</a>
+                                        </div>
+                                    <?php endif; ?>
+                                    <?php if (!empty($project['project_link'])): ?>
+                                        <div class="card-actions">
+                                            <a class="card-link" href="<?= e($project['project_link']) ?>" aria-label="Voir le projet <?= e($project['title']) ?>" target="_blank" rel="noopener noreferrer">Voir le projet</a>
+                                        </div>
+                                    <?php endif; ?>
+                                </div>
+                            </article>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
             </div>
         </section>
 
@@ -145,12 +140,11 @@
                 </header>
 
                 <div class="chips-grid" aria-label="Compétences">
-                    <span class="chip reveal" data-cat="markup">HTML · Sémantique</span>
-                    <span class="chip reveal" data-cat="style">CSS · Responsive</span>
-                    <span class="chip reveal" data-cat="script">JavaScript · DOM</span>
-                    <span class="chip reveal" data-cat="backend">PHP · Bases</span>
-                    <span class="chip reveal" data-cat="tool">Git · Workflow</span>
-                    <span class="chip reveal" data-cat="a11y">Accessibilité</span>
+                    <?php foreach ($skills as $skill): ?>
+                        <span class="chip reveal" data-cat="<?= e($skill['category']) ?>">
+                            <?= e($skill['name']) ?><?php if (!empty($skill['detail'])): ?> · <?= e($skill['detail']) ?><?php endif; ?>
+                        </span>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </section>
@@ -201,7 +195,7 @@
                         </div>
                         <div class="contact-actions">
                             <a class="btn btn-primary btn-lg" href="mailto:guillaume.maignaut@outlook.fr">M’envoyer un email</a>
-                            <a class="btn btn-ghost btn-lg" href="https://www.linkedin.com/" target="_blank" rel="noreferrer">LinkedIn</a>
+                            <a class="btn btn-ghost btn-lg" href="https://www.linkedin.com/in/guillaume-maignaut-9b3464340/" target="_blank" rel="noreferrer">LinkedIn</a>
                         </div>
                     </div>
                 </div>

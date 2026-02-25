@@ -30,26 +30,14 @@
     min-width: 220px;
 }
 
-.brand-logo {
-    width: 42px;
-    height: 42px;
-    border-radius: 14px;
-    background:
-        radial-gradient(
-            circle at 30% 30%,
-            rgba(57, 255, 136, 0.95),
-            rgba(57, 255, 136, 0.15) 55%
-        ),
-        radial-gradient(
-            circle at 70% 70%,
-            rgba(0, 212, 255, 0.9),
-            rgba(0, 212, 255, 0.1) 55%
-        ),
-        rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    box-shadow:
-        0 10px 28px rgba(0, 0, 0, 0.35),
-        0 0 26px rgba(57, 255, 136, 0.18);
+.brand-photo{
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  object-fit: cover;
+  display: block;
+  border: 1px solid rgba(255,255,255,.12);
+  box-shadow: 0 0 0 3px rgba(0,255,180,.08);
 }
 
 .brand-name {

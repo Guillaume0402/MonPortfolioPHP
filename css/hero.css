@@ -62,7 +62,7 @@
     display: flex;
     gap: 40px;
     align-items: center;
-    width: min(1060px, 100%);
+    width: min(1200px, 100%);
     padding: 36px 36px 32px;
     border-radius: var(--radius-lg);
     border: 1px solid var(--glass-border);
@@ -171,7 +171,7 @@
     margin: 0 0 24px;
     color: var(--muted);
     line-height: 1.72;
-    font-size: 15px;
+    font-size: 18px;
     max-width: 60ch;
 }
 

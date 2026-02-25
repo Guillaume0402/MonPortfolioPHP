@@ -1,7 +1,7 @@
 <header class="site-header">
   <div class="container header-inner">
     <a class="brand" href="#top" aria-label="Retour en haut">
-      <span class="brand-logo" aria-hidden="true"></span>
+      <img class="brand-photo" src="/images/photo_profil.jpg" alt="Photo de Guillaume" width="40" height="40">
       <span class="brand-name">Guillaume</span>
       <span class="brand-tag">Développeur Web</span>
     </a>
@@ -14,9 +14,8 @@
     <nav class="site-nav" id="site-nav" aria-label="Navigation principale">
       <a href="#projects" class="nav-link">Projets</a>
       <a href="#skills" class="nav-link">Compétences</a>
-      <a href="#about" class="nav-link">À propos</a>
-      <a href="#contact" class="nav-link">Contact</a>
-      <a href="#contact" class="nav-cta">Me contacter</a>
+      <a href="#about" class="nav-link">À propos</a>      
+      <a href="/pages/contact.php" class="nav-cta">Me contacter</a>
     </nav>
   </div>
 </header>
