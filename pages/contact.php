@@ -1,5 +1,5 @@
 <?php
-require_once '../includes/helpers.php';
+require_once __DIR__ . '/../includes/helpers.php';
 require_once __DIR__ . '/contact_action.php';
 ?>
 
@@ -17,7 +17,7 @@ require_once __DIR__ . '/contact_action.php';
 <body>
     <div id="top" aria-hidden="true"></div>
 
-    <?php include '../includes/header.php'; ?>
+    <?php include __DIR__ . '/../includes/header.php'; ?>
 
     <main>
         <!-- ── Hero / intro ── -->
@@ -214,7 +214,7 @@ require_once __DIR__ . '/contact_action.php';
     </main>
 
     <footer>
-        <?php include '../includes/footer.php'; ?>
+        <?php include __DIR__ . '/../includes/footer.php'; ?>
     </footer>
 
     <script type="module" src="../js/main.js"></script>

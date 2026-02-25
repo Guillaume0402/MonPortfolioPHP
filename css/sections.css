@@ -123,7 +123,7 @@
 }
 
 .card-media img{
-  transition: transform 600ms ease;
+  transition: transform 800ms ease;
 }
 
 .card:hover .card-media img{
